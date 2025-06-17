@@ -41,3 +41,14 @@ class CurrentAccount:
             self.balance += amount
             return True, f"Deposited ${amount} to Current Account"
         return False, "Invalid deposit amount"
+
+def withdraw(self, amount):
+        if amount <= 0:
+            return False, "Withdrawal amount must be positive"
+        if amount > self.balance:
+            return False, "Insufficient funds in Current Account"
+        self.balance -= amount
+        return True, f"Withdrew ${amount:.2f} from Current Account"
+
+    def get_balance(self):
+        return self.balance
