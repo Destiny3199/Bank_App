@@ -30,3 +30,14 @@ if submit:
 
 balance = account.get_balance()
 st.info(f"1Current Balance in {account_type} Account: ${balance:.2f}")
+
+class CurrentAccount:
+    def _init_(self, initial_balance=0.0, overdraft_limit=500.0):
+        self.balance = initial_balance
+        self.overdraft_limit = overdraft_limit
+
+    def deposit(self, amount):
+        if amount > 0:
+            self.balance += amount
+            return True, f"Deposited ${amount} to Current Account"
+        return False, "Invalid deposit amount"
