@@ -1,0 +1,32 @@
+import streamlit as st
+from savings import SavingsAccount
+from current import CurrentAccount
+
+st.set_page_config(page_title="Bank Account App")
+st.title("Bank Account App")
+
+if "savings" not in st.session_state:
+    st.session_state.savings = SavingsAccount()
+if "current" not in st.session_state:
+    st.session_state.current = CurrentAccount()
+
+account_type = st.selectbox("Select Account Type", ["Savings", "Current"])
+amount = st.number_input("Enter amount", min_value=0.0, format="%.2f")
+action = st.radio("Action", ["Deposit", "Withdraw"])
+submit = st.button("Submit")
+
+account = st.session_state.savings if account_type == "Savings" else st.session_state.current
+
+if submit:
+    if action == "Deposit":
+        success, message = account.deposit(amount)
+    else:
+        success, message = account.withdraw(amount)
+
+    if success:
+        st.success(message)
+    else:
+        st.error(message)
+
+balance = account.get_balance()
+st.info(f"1Current Balance in {account_type} Account: ${balance:.2f}")
